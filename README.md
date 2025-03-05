@@ -44,19 +44,19 @@ Das Frontend läuft dann unter: [**http://localhost:4200**](http://localhost:420
 
 ## 🎯 Nützliche Befehle
 
-🔄 **Backend neu starten**
+**Backend neu starten**
 
 ```sh
 mvn clean spring-boot:run
 ```
 
-🛠 **Frontend mit Hot-Reload starten**
+**Frontend mit Hot-Reload starten**
 
 ```sh
 ng serve --open
 ```
 
-📦 **Abhängigkeiten neu installieren**
+**Abhängigkeiten neu installieren**
 
 ```sh
 npm install
