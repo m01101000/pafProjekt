@@ -16,7 +16,7 @@ public class SensorWebSocketService {
     }
 
     public void sendSensorData(Sensor sensor) {
-        logger.info("📤 Sende Sensordaten über WebSocket: Position={}, Höhe={}", sensor.getPosition(), sensor.getHoehe());
+        logger.info("📤 Sende Sensordaten über WebSocket: Position={}, Hoehe={}", sensor.getPosition(), sensor.getHoehe());
         messagingTemplate.convertAndSend("/topic/sensor", sensor);
     }
 }
