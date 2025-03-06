@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink, Router } from '@angular/router'; // ✅ RouterOutlet direkt importieren
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  imports: [CommonModule, RouterOutlet, RouterLink], // ✅ KEIN `RouterModule.forRoot(routes)` hier!
 })
 export class AppComponent {
-  title = 'fahrwerk-frontend';
+  title: string = 'Meine Angular App';
 }
