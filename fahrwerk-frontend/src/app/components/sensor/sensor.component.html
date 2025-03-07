@@ -1,0 +1,27 @@
+<h2>🚗 Aktuelle Sensordaten</h2>
+<p><strong>Prüfmodus:</strong> {{ aktuellerPruefmodus }}</p>
+
+<button (click)="setzePruefmodus('standardPruefung')">Standard</button>
+<button (click)="setzePruefmodus('sportPruefung')">Sport</button>
+<button (click)="setzePruefmodus('offroadPruefung')">Offroad</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Position</th>
+      <th>Höhe (mm)</th>
+      <th>Min</th>
+      <th>Max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sensor of sensoren">
+      <td>{{sensor.id}}</td>
+      <td>{{sensor.position}}</td>
+      <td>{{sensor.hoehe}}</td>
+      <td>{{sensor.minWert}}</td>
+      <td>{{sensor.maxWert}}</td>
+    </tr>
+  </tbody>
+</table>

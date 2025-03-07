@@ -1,32 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Sensor {
+  id: number;
+  position: string;
+  hoehe: number;
+  minWert: number;
+  maxWert: number;
+}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class SensorService {
-  private stompClient!: Client;
-  public sensorData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor() {
-    this.connectWebSocket();
+  apiUrl = 'http://localhost:8080/api/sensoren';
+
+  constructor(private http: HttpClient) { }
+
+  getSensorDaten(): Observable<Sensor[]> {
+    return this.http.get<Sensor[]>(`${this.apiUrl}/aktuelle-daten`);
   }
 
-  private connectWebSocket() {
-    const socket = new SockJS('http://localhost:8080/sensor-data');
-    this.stompClient = new Client({
-      webSocketFactory: () => socket,
-    });
+  getAktuellerPruefmodus(): Observable<string> {
+    return this.http.get(`${this.apiUrl}/pruefmodus`, { responseType: 'text' });
+  }
 
-    this.stompClient.onConnect = () => {
-      console.log('WebSocket verbunden!');
-      this.stompClient.subscribe('/topic/sensor', (message) => {
-        this.sensorData$.next(JSON.parse(message.body));
-      });
-    };
-
-    this.stompClient.activate();
+  setPruefmodus(modus: string): Observable<string> {
+    return this.http.get(`${this.apiUrl}/pruefmodus/${modus}`, { responseType: 'text' });
   }
 }
