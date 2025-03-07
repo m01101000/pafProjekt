@@ -56,12 +56,12 @@ public class SensorSimulator {
         }
     }
 
-
     private double getRandomHoehe() {
-        return sensorPruefService.getMinWert()
-                + random.nextDouble() * (sensorPruefService.getMaxWert() - sensorPruefService.getMinWert());
+        double hoehe = sensorPruefService.getMinWert() 
+                       + random.nextDouble() * (sensorPruefService.getMaxWert() - sensorPruefService.getMinWert());
+        return Math.round(hoehe * 100.0) / 100.0; // ✅ Auf 2 Nachkommastellen gerundet
     }
-
+    
     public List<Sensor> getSensoren() {
         return sensoren;
     }

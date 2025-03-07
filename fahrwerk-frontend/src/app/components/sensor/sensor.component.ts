@@ -28,6 +28,18 @@ export class SensorComponent implements OnInit {
   }
 
   setzePruefmodus(modus: string) {
-    this.sensorService.setPruefmodus(modus).subscribe(() => this.ladeSensorDaten());
+    this.sensorService.setPruefmodus(modus).subscribe(() => {
+      this.aktuellerPruefmodus = modus;
+      this.ladeSensorDaten();
+    });
   }
+
+  istAktiverModus(modus: string): boolean {
+    return this.aktuellerPruefmodus.toLowerCase().includes(modus.toLowerCase());
+  }
+
+  getSensorByPosition(position: string): Sensor | undefined {
+    return this.sensoren.find(sensor => sensor.position === position);
+  }
+  
 }

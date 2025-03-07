@@ -1,28 +1,47 @@
-<h2>🚗 Aktuelle Sensordaten</h2>
-<p><strong>Prüfmodus:</strong> {{ aktuellerPruefmodus }}</p>
-
-<button (click)="setzePruefmodus('standardPruefung')">Standard</button>
-<button (click)="setzePruefmodus('ecoPruefung')">Eco</button>
-<button (click)="setzePruefmodus('sportPruefung')">Sport</button>
-<button (click)="setzePruefmodus('offroadPruefung')">Offroad</button>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Position</th>
-      <th>Höhe (mm)</th>
-      <th>Min</th>
-      <th>Max</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let sensor of sensoren">
-      <td>{{sensor.id}}</td>
-      <td>{{sensor.position}}</td>
-      <td>{{sensor.hoehe}}</td>
-      <td>{{sensor.minWert}}</td>
-      <td>{{sensor.maxWert}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="grid-container">
+  <div class="item1">
+    🚗 Aktuelle Sensordaten
+    <br>
+    <strong>{{ aktuellerPruefmodus }}</strong>
+  </div>
+  <div class="item2">
+    <strong>SensorVorneLinks</strong>
+    <br><br>
+    <div *ngIf="getSensorByPosition('Vorne Links') as sensor">
+      Höhe: {{ sensor.hoehe }} mm
+    </div>
+  </div>
+  <div class="standardButton">
+    <button [ngClass]="{'aktiv': istAktiverModus('standard')} " (click)="setzePruefmodus('standardPruefung')">Standard</button>
+  </div>  
+  <div class="item4">
+    <strong>SensorVorneRechts</strong>
+    <br><br>
+    <div *ngIf="getSensorByPosition('Vorne Rechts') as sensor">
+      Höhe: {{ sensor.hoehe }} mm
+    </div>
+  </div>
+  <div class="ecoButton">
+    <button [ngClass]="{'aktiv': istAktiverModus('eco')} " (click)="setzePruefmodus('ecoPruefung')">Eco</button>
+  </div>
+  <div class="item6">
+    <strong>SensorHintenLinks</strong>
+    <br><br>
+    <div *ngIf="getSensorByPosition('Hinten Links') as sensor">
+      Höhe: {{ sensor.hoehe }} mm
+    </div>
+  </div>
+  <div class="sportButton">
+    <button [ngClass]="{'aktiv': istAktiverModus('sport')} " (click)="setzePruefmodus('sportPruefung')">Sport</button>
+  </div>
+  <div class="item8">
+    <strong>SensorHintenRechts</strong>
+    <br><br>
+    <div *ngIf="getSensorByPosition('Hinten Rechts') as sensor">
+      Höhe: {{ sensor.hoehe }} mm
+    </div>
+  </div>
+  <div class="offroadButton">
+    <button [ngClass]="{'aktiv': istAktiverModus('offroad')} " (click)="setzePruefmodus('offroadPruefung')">Offroad</button>
+  </div>  
+</div>

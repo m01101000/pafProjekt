@@ -1,0 +1,81 @@
+button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button.aktiv {
+    background-color: #4CAF50; /* Grün, beliebig änderbar */
+    color: white;
+  }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    background-color: none;
+    padding: 10px;
+  }
+  
+  .grid-container > div {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+  }
+  
+  .item1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  .item2 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 4;
+  }
+
+  .standardButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  .item4 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 4;
+  }
+
+  .ecoButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  .item6 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 4;
+    grid-row-end: 6;
+  }
+
+  .sportButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  .item8 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 6;
+  }
+
+  .offroadButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
