@@ -8,22 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SensorPruefService {
     private static final Logger logger = LoggerFactory.getLogger(SensorPruefService.class);
 
     private final ApplicationContext context;
     private Pruefstrategie pruefstrategie;
-    private final List<Sensor> sensoren;
 
     @Autowired
-    public SensorPruefService(ApplicationContext context, List<Sensor> sensoren) {
+    public SensorPruefService(ApplicationContext context) {
         this.context = context;
-        this.sensoren = sensoren;
-        this.pruefstrategie = context.getBean("standardPruefung", Pruefstrategie.class); // Standard setzen
-        aktualisiereSensorGrenzwerte();
+        this.pruefstrategie = context.getBean("standardPruefung", Pruefstrategie.class);
     }
 
     public boolean istSensorwertGueltig(Sensor sensor) {
@@ -31,25 +26,14 @@ public class SensorPruefService {
     }
 
     public void setPruefmodus(String modus) {
-        logger.info("🔍 VERSUCH, Prüfmodus zu ändern: {}", modus);
+        logger.info("🔍 Prüfmodus wird geändert zu: {}", modus);
         
         try {
-            Pruefstrategie neueStrategie = context.getBean(modus, Pruefstrategie.class);
-            this.pruefstrategie = neueStrategie;
+            pruefstrategie = context.getBean(modus, Pruefstrategie.class);
             logger.info("✅ Prüfmodus erfolgreich geändert zu: {}", modus);
-            
-            aktualisiereSensorGrenzwerte();
         } catch (Exception e) {
-            logger.error("❌ Fehler beim Ändern des Prüfmodus: Ungültiger Modus {}", modus);
-        }
-    }
-    
-    
-    private void aktualisiereSensorGrenzwerte() {
-        for (Sensor sensor : sensoren) {
-            pruefstrategie.aktualisiereSensorWerte(sensor);
-            logger.info("🔄 Sensor {} ({}): Neuer Wertebereich: [{} - {}]", 
-                        sensor.getId(), sensor.getPosition(), sensor.getMinWert(), sensor.getMaxWert());
+            logger.error("❌ Ungültiger Prüfmodus: {}", modus);
+            throw new IllegalArgumentException("Ungültiger Prüfmodus: " + modus);
         }
     }
 
@@ -62,7 +46,6 @@ public class SensorPruefService {
     }
 
     public String getAktuellerPruefmodus() {
-        return pruefstrategie.getClass().getSimpleName(); // Gibt den Namen der aktiven Strategie zurück
+        return pruefstrategie.getClass().getSimpleName();
     }
-    
 }

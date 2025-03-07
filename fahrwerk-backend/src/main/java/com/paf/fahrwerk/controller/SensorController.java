@@ -1,17 +1,28 @@
 package com.paf.fahrwerk.controller;
 
 import org.springframework.web.bind.annotation.*;
-
+import com.paf.fahrwerk.model.Sensor;
 import com.paf.fahrwerk.service.SensorPruefService;
+import com.paf.fahrwerk.service.SensorSimulator;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sensoren")
 public class SensorController {
-    private final SensorPruefService sensorPruefService;
 
-    public SensorController(SensorPruefService sensorPruefService) {
+    private final SensorPruefService sensorPruefService;
+    private final SensorSimulator sensorSimulator;
+
+    public SensorController(SensorPruefService sensorPruefService, SensorSimulator sensorSimulator) {
         this.sensorPruefService = sensorPruefService;
+        this.sensorSimulator = sensorSimulator;
+    }
+
+    @GetMapping("/aktuelle-daten")
+    public List<Sensor> getAktuelleSensordaten() {
+        return sensorSimulator.getSensoren();
     }
 
     @GetMapping("/pruefmodus/{modus}")
@@ -19,8 +30,8 @@ public class SensorController {
         try {
             sensorPruefService.setPruefmodus(modus);
             return ResponseEntity.ok("✅ Prüfmodus geändert zu: " + modus);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("❌ Ungültiger Prüfmodus: " + modus);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("❌ " + e.getMessage());
         }
     }
 
@@ -29,4 +40,16 @@ public class SensorController {
         return ResponseEntity.ok("Aktueller Prüfmodus: " + sensorPruefService.getAktuellerPruefmodus());
     }
 
+    // REST-Endpunkt für den aktuellen Wertebereich
+    @GetMapping("/wertebereich")
+    public ResponseEntity<String> getWertebereich() {
+        return ResponseEntity.ok("Aktueller Wertebereich: [" 
+          + sensorPruefService.getMinWert() + " - " + sensorPruefService.getMaxWert() + "]");
+    }
+
+    // Sensordaten abfragen und zurückgeben
+    @GetMapping("/alle")
+    public List<Sensor> getAlleSensoren() {
+        return sensorSimulator.getSensoren();
+    }
 }
