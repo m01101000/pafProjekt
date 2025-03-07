@@ -18,4 +18,8 @@ public class SensorService {
     public List<Sensor> getAllSensors() {
         return sensorRepository.findAll();
     }
+
+    public Sensor getSensorById(Long id) {
+        return sensorRepository.findById(id).orElse(null);
+    }    
 }
