@@ -5,6 +5,15 @@
     <strong>{{ aktuellerPruefmodus }}</strong>
   </div>
   <div class="item2">
+    <div class="SensorBarR">
+      <div *ngIf="getSensorById(1) as sensor" class="sensor"> 
+        <div class="progress-vertical">
+          <div class="progress-fill"
+              [style.height.%]="berechneProzent(sensor)">
+          </div>
+        </div>
+      </div>
+    </div>
     <strong>SensorVorneLinks</strong>
     <br><br>
     <div *ngIf="getSensorByPosition('Vorne Links') as sensor">
@@ -15,6 +24,15 @@
     <button [ngClass]="{'aktiv': istAktiverModus('standard')} " (click)="setzePruefmodus('standardPruefung')">Standard</button>
   </div>  
   <div class="item4">
+    <div class="SensorBarL">
+      <div *ngIf="getSensorById(2) as sensor" class="sensor"> 
+        <div class="progress-vertical">
+          <div class="progress-fill"
+              [style.height.%]="berechneProzent(sensor)">
+          </div>
+        </div>
+      </div>
+    </div>
     <strong>SensorVorneRechts</strong>
     <br><br>
     <div *ngIf="getSensorByPosition('Vorne Rechts') as sensor">
@@ -25,6 +43,15 @@
     <button [ngClass]="{'aktiv': istAktiverModus('eco')} " (click)="setzePruefmodus('ecoPruefung')">Eco</button>
   </div>
   <div class="item6">
+    <div class="SensorBarR">
+      <div *ngIf="getSensorById(3) as sensor" class="sensor"> 
+        <div class="progress-vertical">
+          <div class="progress-fill"
+              [style.height.%]="berechneProzent(sensor)">
+          </div>
+        </div>
+      </div>
+    </div>
     <strong>SensorHintenLinks</strong>
     <br><br>
     <div *ngIf="getSensorByPosition('Hinten Links') as sensor">
@@ -35,6 +62,15 @@
     <button [ngClass]="{'aktiv': istAktiverModus('sport')} " (click)="setzePruefmodus('sportPruefung')">Sport</button>
   </div>
   <div class="item8">
+    <div class="SensorBarL">
+      <div *ngIf="getSensorById(4) as sensor" class="sensor"> 
+        <div class="progress-vertical">
+          <div class="progress-fill"
+              [style.height.%]="berechneProzent(sensor)">
+          </div>
+        </div>
+      </div>
+    </div>
     <strong>SensorHintenRechts</strong>
     <br><br>
     <div *ngIf="getSensorByPosition('Hinten Rechts') as sensor">

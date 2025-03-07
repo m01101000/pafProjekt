@@ -42,4 +42,24 @@ export class SensorComponent implements OnInit {
     return this.sensoren.find(sensor => sensor.position === position);
   }
   
+  berechneProzent(sensor: Sensor): number {
+    const diff = sensor.maxWert - sensor.minWert;
+    if (diff === 0) return 0;
+    let prozent = ((sensor.hoehe - sensor.minWert) / diff) * 100;
+    prozent = Math.min(Math.max(prozent, 0), 100);
+    return Math.round(prozent * 10) / 10;
+  }
+  
+  getSensorById(id: number): Sensor | undefined {
+    return this.sensoren.find(sensor => sensor.id === id);
+  }
+
+  getGradientStyle(sensor: Sensor): object {
+    const percent = this.berechneProzent(sensor);
+    return {
+      'background': `linear-gradient(to top,#4caf4f36 ${percent}%, #ddd ${percent}%)`
+    };
+  }
+  
+  
 }

@@ -8,9 +8,48 @@ button {
   }
   
   button.aktiv {
-    background-color: #4CAF50; /* Grün, beliebig änderbar */
+    background-color: #4caf4f; /* Grün, beliebig änderbar */
     color: white;
   }
+
+.sensor {
+  display: inline-block;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+}
+
+.progress-vertical {
+  width: 30px;
+  height: 100px; /* Höhe deiner vertikalen Bar */
+  background-color: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+.progress-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.5s ease;
+
+  /* ✅ Weicher Farbverlauf nach oben hin transparent */
+  background: linear-gradient(
+    to top, 
+    rgba(76, 175, 80, 0.25),        /* Vollfarbe am unteren Ende */
+    rgba(76, 175, 80, 0.20), 
+    rgba(76, 175, 80, 0.15), 
+    rgba(76, 175, 80, 0.1),
+    rgba(76, 175, 80, 0.05),
+    rgba(76, 175, 80, 0)         /* Komplett transparent oben */
+  );
+}
 
 .grid-container {
     display: grid;
@@ -37,6 +76,7 @@ button {
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 4;
+    position: relative;
   }
 
   .standardButton {
@@ -49,6 +89,7 @@ button {
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 4;
+    position: relative;
   }
 
   .ecoButton {
@@ -61,6 +102,13 @@ button {
     grid-column-end: 2;
     grid-row-start: 4;
     grid-row-end: 6;
+    position: relative;
+  }
+
+  .SensorBarL {
+    position: absolute; /* ✅ Element absolut positionieren */
+    top: 5px;          /* gewünschter Abstand von oben */
+    left: -25px;        /* verschiebt die Bar nach links außerhalb des Containers */
   }
 
   .sportButton {
@@ -73,6 +121,13 @@ button {
     grid-column-end: 4;
     grid-row-start: 4;
     grid-row-end: 6;
+    position: relative;
+  }
+
+  .SensorBarR {
+    position: absolute; /* ✅ Element absolut positionieren */
+    top: 5px;          /* gewünschter Abstand von oben */
+    right: -25px;        /* verschiebt die Bar nach links außerhalb des Containers */
   }
 
   .offroadButton {
