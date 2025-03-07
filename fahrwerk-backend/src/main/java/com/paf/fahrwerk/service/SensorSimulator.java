@@ -38,13 +38,17 @@ public class SensorSimulator {
 
         for (Sensor sensor : sensoren) {
             sensor.setHoehe(getRandomHoehe());
-
+    
             boolean gueltig = sensorPruefService.istSensorwertGueltig(sensor);
+    
             if (!gueltig) {
-                logger.warn("❌ Ungültiger Sensorwert: Sensor {} ({} mm)", sensor.getPosition(), sensor.getHoehe());
-                double korrigierteHoehe = (sensor.getMinWert() + sensor.getMaxWert()) / 2;
-                sensor.setHoehe(korrigierteHoehe);
-                logger.info("🔧 Sensorwert korrigiert auf: {} mm", korrigierteHoehe);
+                logger.warn("❌ Ungültiger Sensorwert! Sensor: {}, Wert: {} mm, Grenzwerte: ({} - {})",
+                            sensor.getPosition(),
+                            sensor.getHoehe(),
+                            sensor.getMinWert(),
+                            sensor.getMaxWert());
+            } else {
+                logger.info("✅ Sensor OK: {} = {} mm", sensor.getPosition(), sensor.getHoehe());
             }
         }
     }
@@ -57,9 +61,21 @@ public class SensorSimulator {
     }
 
     private double getRandomHoehe() {
-        double hoehe = sensorPruefService.getMinWert() 
-                       + random.nextDouble() * (sensorPruefService.getMaxWert() - sensorPruefService.getMinWert());
-        return Math.round(hoehe * 100.0) / 100.0; // ✅ Auf 2 Nachkommastellen gerundet
+        double min = sensorPruefService.getMinWert();
+        double max = sensorPruefService.getMaxWert();
+        double hoehe;
+    
+        // Wahrscheinlichkeit festlegen (z.B. 20% außerhalb des Bereichs)
+        if(random.nextDouble() < 0.2) {
+            // außerhalb des erlaubten Bereichs generieren
+            hoehe = (random.nextBoolean())
+                ? min - random.nextDouble() * 5    // unter minWert
+                : max + random.nextDouble() * 5;   // über maxWert
+        } else {
+            hoehe = min + random.nextDouble() * (max - min); // im Bereich
+        }
+    
+        return Math.round(hoehe * 100.0) / 100.0;
     }
     
     public List<Sensor> getSensoren() {
