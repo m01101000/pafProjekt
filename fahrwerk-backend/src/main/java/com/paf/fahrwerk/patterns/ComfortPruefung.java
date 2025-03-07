@@ -3,8 +3,8 @@ package com.paf.fahrwerk.patterns;
 import com.paf.fahrwerk.model.Sensor;
 import org.springframework.stereotype.Component;
 
-@Component("ecoPruefung")
-public class EcoPruefung implements Pruefstrategie {
+@Component("comfortPruefung")
+public class ComfortPruefung implements Pruefstrategie {
     
     @Override
     public boolean pruefeSensorwert(Sensor sensor) {
