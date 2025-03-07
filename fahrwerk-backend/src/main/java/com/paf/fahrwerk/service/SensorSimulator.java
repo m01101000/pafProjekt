@@ -31,7 +31,7 @@ public class SensorSimulator {
         sensoren.add(new Sensor(4L, "Hinten Rechts", 0));
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 500)
     public void aktualisiereSensorDaten() {
         logger.info("--- Sensordaten aktualisieren ---");
         aktualisiereSensorGrenzwerte();

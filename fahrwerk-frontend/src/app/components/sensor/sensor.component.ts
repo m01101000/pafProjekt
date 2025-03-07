@@ -19,7 +19,7 @@ export class SensorComponent implements OnInit {
 
   ngOnInit() {
     this.ladeSensorDaten();
-    setInterval(() => this.ladeSensorDaten(), 2000);
+    setInterval(() => this.ladeSensorDaten(), 500);
   }
 
   ladeSensorDaten() {
