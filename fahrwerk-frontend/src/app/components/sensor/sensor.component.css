@@ -1,16 +1,34 @@
 button {
-    background-color: white;
+    background-color: none;
     color: black;
-    border: 1px solid #ccc;
+    border: 3px solid rgba(209, 209, 209, 0.5);
     padding: 8px 15px;
     cursor: pointer;
     width: 100%;
+    font-size: large;
+    border-radius: 8px;
   }
   
   button.aktiv {
     background-color: #4caf4f; /* Grün, beliebig änderbar */
     color: white;
+    border: 3px solid rgba(76, 175, 79, 0.5);
+    font-size: large;
   }
+
+@media (prefers-color-scheme: dark) {
+  button {
+    background-color: #121212;
+    color: rgba(209, 209, 209, 1);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  button.aktiv {
+    background-color: rgba(76, 175, 79, 0.5);
+    color: rgba(209, 209, 209, 1);
+  }
+}
 
 .sensor {
   display: inline-block;
@@ -60,7 +78,6 @@ button {
   }
   
   .grid-container > div {
-    background-color: #f1f1f1;
     text-align: center;
     padding: 10px;
     font-size: 30px;
@@ -77,6 +94,9 @@ button {
     grid-row-start: 2;
     grid-row-end: 4;
     position: relative;
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
   }
 
   .standardButton {
@@ -90,6 +110,9 @@ button {
     grid-row-start: 2;
     grid-row-end: 4;
     position: relative;
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
   }
 
   .ecoButton {
@@ -103,12 +126,9 @@ button {
     grid-row-start: 4;
     grid-row-end: 6;
     position: relative;
-  }
-
-  .SensorBarL {
-    position: absolute; /* ✅ Element absolut positionieren */
-    top: 5px;          /* gewünschter Abstand von oben */
-    left: -25px;        /* verschiebt die Bar nach links außerhalb des Containers */
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
   }
 
   .sportButton {
@@ -122,6 +142,15 @@ button {
     grid-row-start: 4;
     grid-row-end: 6;
     position: relative;
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
+  }
+
+  .SensorBarL {
+    position: absolute; /* ✅ Element absolut positionieren */
+    top: 5px;          /* gewünschter Abstand von oben */
+    left: -25px;        /* verschiebt die Bar nach links außerhalb des Containers */
   }
 
   .SensorBarR {
@@ -130,7 +159,38 @@ button {
     right: -25px;        /* verschiebt die Bar nach links außerhalb des Containers */
   }
 
+  @media (prefers-color-scheme: dark) {
+    .SensorBarL {
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .SensorBarR {
+      visibility: hidden;
+    }
+  }
+
   .offroadButton {
     grid-column-start: 2;
     grid-column-end: 3;
+  }
+
+  .item9 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    position: relative;
+  }
+
+  .item10 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 7;
+    grid-row-end: 8;
+    position: relative;
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
   }

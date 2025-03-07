@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+/* Heller Modus (Standard) */
+body {
+    background-color: #ffffff;  /* hell */
+    color: #000000;             /* dunkler Text */
+  }
+  
+  /* Dunkler Modus, wenn der Browser dunkel eingestellt ist */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #121212;  /* dunkel */
+      color: #ffffff;             /* heller Text */
+    }
+  }

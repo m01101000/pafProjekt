@@ -1,8 +1,6 @@
 <div class="grid-container">
   <div class="item1">
-    🚗 Aktuelle Sensordaten
-    <br>
-    <strong>{{ aktuellerPruefmodus }}</strong>
+    <strong>🚗 Aktuelle Sensordaten</strong>
   </div>
   <div class="item2">
     <div class="SensorBarR">
@@ -14,10 +12,10 @@
         </div>
       </div>
     </div>
-    <strong>SensorVorneLinks</strong>
+    Sensor VL
     <br><br>
     <div *ngIf="getSensorByPosition('Vorne Links') as sensor">
-      Höhe: {{ sensor.hoehe }} mm
+      Höhe: <strong style="display: inline-flex; width: 70px;">{{ sensor.hoehe }}</strong> mm
     </div>
   </div>
   <div class="standardButton">
@@ -33,10 +31,10 @@
         </div>
       </div>
     </div>
-    <strong>SensorVorneRechts</strong>
+    Sensor VR
     <br><br>
     <div *ngIf="getSensorByPosition('Vorne Rechts') as sensor">
-      Höhe: {{ sensor.hoehe }} mm
+      Höhe: <strong style="display: inline-flex; width: 70px;">{{ sensor.hoehe }}</strong> mm
     </div>
   </div>
   <div class="ecoButton">
@@ -52,10 +50,10 @@
         </div>
       </div>
     </div>
-    <strong>SensorHintenLinks</strong>
+    Sensor HL
     <br><br>
     <div *ngIf="getSensorByPosition('Hinten Links') as sensor">
-      Höhe: {{ sensor.hoehe }} mm
+      Höhe: <strong style="display: inline-flex; width: 70px;">{{ sensor.hoehe }}</strong> mm
     </div>
   </div>
   <div class="sportButton">
@@ -71,13 +69,19 @@
         </div>
       </div>
     </div>
-    <strong>SensorHintenRechts</strong>
+    Sensor HR
     <br><br>
     <div *ngIf="getSensorByPosition('Hinten Rechts') as sensor">
-      Höhe: {{ sensor.hoehe }} mm
+      Höhe: <strong style="display: inline-flex; width: 70px;">{{ sensor.hoehe }}</strong> mm
     </div>
   </div>
   <div class="offroadButton">
     <button [ngClass]="{'aktiv': istAktiverModus('offroad')} " (click)="setzePruefmodus('offroadPruefung')">Offroad</button>
-  </div>  
+  </div>
+  <div class="item9">
+    <strong>🎯 Warnungen</strong>
+  </div>
+  <div class="item10">
+    Platzhalter für Warnungen und Fehlermeldungen
+  </div>   
 </div>
