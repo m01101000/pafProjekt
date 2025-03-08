@@ -10,6 +10,16 @@ export interface Sensor {
   maxWert: number;
 }
 
+export interface SensorFehler {
+  id: number;
+  sensorId: number;
+  position: string;
+  gemesseneHoehe: number;
+  minWert: number;
+  maxWert: number;
+  zeitstempel: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,4 +40,13 @@ export class SensorService {
   setPruefmodus(modus: string): Observable<string> {
     return this.http.get(`${this.apiUrl}/pruefmodus/${modus}`, { responseType: 'text' });
   }
+
+  getFehlerListe(): Observable<SensorFehler[]> {
+    return this.http.get<SensorFehler[]>(`${this.apiUrl}/fehler`);
+  }
+
+  deleteAlleFehler(): Observable<string> {
+    return this.http.delete(`${this.apiUrl}/fehler`, { responseType: 'text' });
+  }
+  
 }

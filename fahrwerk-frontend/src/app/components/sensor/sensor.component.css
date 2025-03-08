@@ -69,6 +69,10 @@ button {
   );
 }
 
+.Sensor-fehler-liste{
+  font-size: large;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -189,6 +193,17 @@ button {
     grid-column-end: 4;
     grid-row-start: 7;
     grid-row-end: 8;
+    position: relative;
+    border-style: solid;
+    border-color: rgba(209, 209, 209, 0.5);
+    border-radius: 8px;
+  }
+
+  .item11 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 8;
+    grid-row-end: 9;
     position: relative;
     border-style: solid;
     border-color: rgba(209, 209, 209, 0.5);

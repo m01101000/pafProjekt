@@ -82,6 +82,32 @@
     <strong>🎯 Warnungen</strong>
   </div>
   <div class="item10">
-    Platzhalter für Warnungen und Fehlermeldungen
+    Platzhalter für Warnungen und Fehlermeldungen    
+  </div>
+  <div class="item11">
+    <strong>🚨 Fehlerhafte Sensorwerte</strong>
+    <div class="Sensor-fehler-liste">
+      <table>
+        <thead>
+          <tr>
+            <th>Sensor ID</th>
+            <th>Position</th>
+            <th>Messwert (mm)</th>
+            <th>Erwartet (min - max)</th>
+            <th>Zeit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fehler of fehlerListe">
+            <td>{{ fehler.sensorId }}</td>
+            <td>{{ fehler.position }}</td>
+            <td>{{ fehler.gemesseneHoehe }}</td>
+            <td>{{ fehler.minWert }} - {{ fehler.maxWert }}</td>
+            <td>{{ fehler.zeitstempel }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="delete-button" (click)="loescheAlleFehler()">🗑️ Alle Fehler löschen</button>
   </div>   
 </div>

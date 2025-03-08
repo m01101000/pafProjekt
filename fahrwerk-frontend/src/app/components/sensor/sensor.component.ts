@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { SensorService, Sensor } from '../../services/sensor.service';
+import { SensorService, Sensor, SensorFehler } from '../../services/sensor.service';
 
 @Component({
   selector: 'app-sensor',
@@ -15,16 +15,24 @@ export class SensorComponent implements OnInit {
   sensoren: Sensor[] = [];
   aktuellerPruefmodus = '';
 
+  fehlerListe: SensorFehler[] = [];
+
   constructor(private sensorService: SensorService) {}
 
   ngOnInit() {
     this.ladeSensorDaten();
     setInterval(() => this.ladeSensorDaten(), 500);
+    this.ladeFehlerDaten();
+    setInterval(() => this.ladeFehlerDaten(), 500);
   }
 
   ladeSensorDaten() {
     this.sensorService.getSensorDaten().subscribe(data => this.sensoren = data);
     this.sensorService.getAktuellerPruefmodus().subscribe(modus => this.aktuellerPruefmodus = modus);
+  }
+
+  ladeFehlerDaten() {
+    this.sensorService.getFehlerListe().subscribe(data => this.fehlerListe = data);
   }
 
   setzePruefmodus(modus: string) {
@@ -61,5 +69,11 @@ export class SensorComponent implements OnInit {
     };
   }
   
+  loescheAlleFehler() {
+    this.sensorService.deleteAlleFehler().subscribe(response => {
+      console.log(response);
+      this.fehlerListe = []; // Frontend-Daten sofort leeren
+    });
+  }  
   
 }

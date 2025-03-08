@@ -91,7 +91,7 @@ public class SensorSimulator {
         double hoehe;
     
         // Wahrscheinlichkeit festlegen (z.B. 20% außerhalb des Bereichs)
-        if(random.nextDouble() < 0.05) {
+        if(random.nextDouble() < 0.01) {
             // außerhalb des erlaubten Bereichs generieren
             hoehe = (random.nextBoolean())
                 ? min - random.nextDouble() * 5    // unter minWert

@@ -58,8 +58,15 @@ public class SensorController {
     }
 
     @GetMapping("/fehler")
-    public List<SensorFehler> getAlleSensorFehler() {
-        return sensorFehlerRepository.findAll();
+    public List<SensorFehler> getLetzteFehler() {
+        return sensorFehlerRepository.findTop5ByOrderByZeitstempelDesc();
     }
+
+    @DeleteMapping("/fehler")
+    public ResponseEntity<String> deleteAllSensorFehler() {
+        sensorFehlerRepository.deleteAll();
+        return ResponseEntity.ok("🗑️ Alle Sensor-Fehler wurden gelöscht!");
+    }
+
 
 }
