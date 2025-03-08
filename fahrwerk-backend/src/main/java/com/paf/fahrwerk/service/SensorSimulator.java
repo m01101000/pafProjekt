@@ -1,11 +1,16 @@
 package com.paf.fahrwerk.service;
 
 import com.paf.fahrwerk.model.Sensor;
+import com.paf.fahrwerk.model.SensorFehler;
+import com.paf.fahrwerk.repository.SensorFehlerRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,25 +36,45 @@ public class SensorSimulator {
         sensoren.add(new Sensor(4L, "Hinten Rechts", 0));
     }
 
+    @Autowired
+    private SensorFehlerRepository sensorFehlerRepository;
+
     @Scheduled(fixedRate = 500)
     public void aktualisiereSensorDaten() {
-        logger.info("--- Sensordaten aktualisieren ---");
+        logger.info("--- Sensorwerte aktualisieren ---");
         aktualisiereSensorGrenzwerte();
 
         for (Sensor sensor : sensoren) {
             sensor.setHoehe(getRandomHoehe());
-    
-            boolean gueltig = sensorPruefService.istSensorwertGueltig(sensor);
-    
-            if (!gueltig) {
-                logger.warn("❌ Ungültiger Sensorwert! Sensor: {}, Wert: {} mm, Grenzwerte: ({} - {})",
-                            sensor.getPosition(),
-                            sensor.getHoehe(),
-                            sensor.getMinWert(),
-                            sensor.getMaxWert());
-            } else {
-                logger.info("✅ Sensor OK: {} = {} mm", sensor.getPosition(), sensor.getHoehe());
+
+            if (!sensorPruefService.istSensorwertGueltig(sensor)) {
+                logger.error("❌ Fehler erkannt: Sensor: {} ({} mm)", sensor.getPosition(), sensor.getHoehe());
+
+                SensorFehler fehler = new SensorFehler();
+                fehler.setSensorId(sensor.getId());
+                fehler.setPosition(sensor.getPosition());
+                fehler.setGemesseneHoehe(sensor.getHoehe());
+                fehler.setMinWert(sensorPruefService.getMinWert());
+                fehler.setMaxWert(sensorPruefService.getMaxWert());
+                fehler.setZeitstempel(LocalDateTime.now());
+
+                sensorFehlerRepository.save(fehler);
             }
+        }
+    }
+
+    public void alleFehlerInConsoleAusgeben() {
+        List<SensorFehler> alleFehler = sensorFehlerRepository.findAll();
+    
+        logger.info("📜 Gespeicherte Sensordaten-Fehler:");
+        for (SensorFehler fehler : alleFehler) {
+            logger.info("SensorId: {}, Position: {}, Höhe: {} mm, Grenzwerte: [{} - {}], Zeitpunkt: {}",
+                fehler.getSensorId(),
+                fehler.getPosition(),
+                fehler.getGemesseneHoehe(),
+                fehler.getMinWert(),
+                fehler.getMaxWert(),
+                fehler.getZeitstempel());
         }
     }
 
@@ -66,7 +91,7 @@ public class SensorSimulator {
         double hoehe;
     
         // Wahrscheinlichkeit festlegen (z.B. 20% außerhalb des Bereichs)
-        if(random.nextDouble() < 0.2) {
+        if(random.nextDouble() < 0.05) {
             // außerhalb des erlaubten Bereichs generieren
             hoehe = (random.nextBoolean())
                 ? min - random.nextDouble() * 5    // unter minWert

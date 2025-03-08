@@ -2,6 +2,8 @@ package com.paf.fahrwerk.controller;
 
 import org.springframework.web.bind.annotation.*;
 import com.paf.fahrwerk.model.Sensor;
+import com.paf.fahrwerk.model.SensorFehler;
+import com.paf.fahrwerk.repository.SensorFehlerRepository;
 import com.paf.fahrwerk.service.SensorPruefService;
 import com.paf.fahrwerk.service.SensorSimulator;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,12 @@ public class SensorController {
 
     private final SensorPruefService sensorPruefService;
     private final SensorSimulator sensorSimulator;
+    private final SensorFehlerRepository sensorFehlerRepository;
 
-    public SensorController(SensorPruefService sensorPruefService, SensorSimulator sensorSimulator) {
+    public SensorController(SensorPruefService sensorPruefService, SensorSimulator sensorSimulator, SensorFehlerRepository sensorFehlerRepository) {
         this.sensorPruefService = sensorPruefService;
         this.sensorSimulator = sensorSimulator;
+        this.sensorFehlerRepository = sensorFehlerRepository;
     }
 
     @GetMapping("/aktuelle-daten")
@@ -52,4 +56,10 @@ public class SensorController {
     public List<Sensor> getAlleSensoren() {
         return sensorSimulator.getSensoren();
     }
+
+    @GetMapping("/fehler")
+    public List<SensorFehler> getAlleSensorFehler() {
+        return sensorFehlerRepository.findAll();
+    }
+
 }
