@@ -82,32 +82,44 @@
     <strong>🎯 Warnungen</strong>
   </div>
   <div class="item10">
-    Platzhalter für Warnungen und Fehlermeldungen    
-  </div>
-  <div class="item11">
-    <strong>🚨 Fehlerhafte Sensorwerte</strong>
-    <div class="Sensor-fehler-liste">
-      <table>
-        <thead>
-          <tr>
-            <th>Sensor ID</th>
-            <th>Position</th>
-            <th>Messwert (mm)</th>
-            <th>Erwartet (min - max)</th>
-            <th>Zeit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let fehler of fehlerListe">
-            <td>{{ fehler.sensorId }}</td>
-            <td>{{ fehler.position }}</td>
-            <td>{{ fehler.gemesseneHoehe }}</td>
-            <td>{{ fehler.minWert }} - {{ fehler.maxWert }}</td>
-            <td>{{ fehler.zeitstempel }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <button class="delete-button" (click)="loescheAlleFehler()">🗑️ Alle Fehler löschen</button>
-  </div>   
+    <div class="grid-container-warnings">
+      <div class="warnings2">
+        <strong>🚨 Kritische Warnungen</strong>
+        <p>{{ korrelationsWarnung }}</p>
+      </div>
+      <div class="warnings1">
+        <strong>🚨 Häufige Sensorfehler</strong>
+        <ul class="fehler-analyse">
+          <li *ngFor="let fehler of haeufigeFehler">{{ fehler }}</li>
+        </ul>
+      </div>
+      
+      <div class="warnings3">
+        <strong>🚨 Fehlerhafte Sensorwerte</strong>
+        <button class="delete-button" (click)="loescheAlleFehler()">🗑️ Alle Fehler löschen</button>
+        <div class="Sensor-fehler-liste">
+          <table>
+            <thead>
+              <tr>
+                <th>Sensor ID</th>
+                <th>Position</th>
+                <th>Messwert (mm)</th>
+                <th>Erwartet (min - max)</th>
+                <th>Zeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fehler of fehlerListe">
+                <td>{{ fehler.sensorId }}</td>
+                <td>{{ fehler.position }}</td>
+                <td>{{ fehler.gemesseneHoehe }}</td>
+                <td>{{ fehler.minWert }} - {{ fehler.maxWert }}</td>
+                <td>{{ fehler.zeitstempel }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>   
+    </div>    
+  </div>  
 </div>

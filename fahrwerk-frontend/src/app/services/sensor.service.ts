@@ -49,4 +49,12 @@ export class SensorService {
     return this.http.delete(`${this.apiUrl}/fehler`, { responseType: 'text' });
   }
   
+  getHaeufigeFehler(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/fehler/haeufige`);
+  }
+  
+  getFehlerKorrelation(): Observable<string> {
+    return this.http.get(`${this.apiUrl}/fehler/korrelation`, { responseType: 'text' });
+  }
+  
 }

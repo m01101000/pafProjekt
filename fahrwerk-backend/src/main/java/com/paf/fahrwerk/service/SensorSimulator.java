@@ -44,11 +44,13 @@ public class SensorSimulator {
         logger.info("--- Sensorwerte aktualisieren ---");
         aktualisiereSensorGrenzwerte();
 
+        LocalDateTime timeLimit = LocalDateTime.now().minusMinutes(5);
+
         for (Sensor sensor : sensoren) {
             sensor.setHoehe(getRandomHoehe());
 
             if (!sensorPruefService.istSensorwertGueltig(sensor)) {
-                logger.error("❌ Fehler erkannt: Sensor: {} ({} mm)", sensor.getPosition(), sensor.getHoehe());
+                logger.error("❌ Fehler erkannt: Sensor: {} ({} mm)", sensor.getPosition(), sensor.getHoehe(), sensor.getMinWert(), sensor.getMaxWert());
 
                 SensorFehler fehler = new SensorFehler();
                 fehler.setSensorId(sensor.getId());
@@ -59,7 +61,17 @@ public class SensorSimulator {
                 fehler.setZeitstempel(LocalDateTime.now());
 
                 sensorFehlerRepository.save(fehler);
+
+                long recentErrors = sensorFehlerRepository.countRecentErrors(sensor.getId(), timeLimit);
+                if (recentErrors > 3) {
+                    logger.warn("⚠️ WARNUNG: Sensor {} hat innerhalb der letzten 5 Minuten {} Fehler!", sensor.getPosition(), recentErrors);
+                }
             }
+        }
+
+        long affectedSensors = sensorFehlerRepository.countDistinctErrorSensors(timeLimit);
+        if (affectedSensors > 2) {
+            logger.error("🚨 KRITISCHE WARNUNG: {} Sensoren haben innerhalb der letzten 5 Minuten Fehler registriert!", affectedSensors);
         }
     }
 

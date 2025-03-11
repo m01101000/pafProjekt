@@ -24,6 +24,8 @@ export class SensorComponent implements OnInit {
     setInterval(() => this.ladeSensorDaten(), 500);
     this.ladeFehlerDaten();
     setInterval(() => this.ladeFehlerDaten(), 500);
+    this.ladeFehlermeldungen();
+    setInterval(() => this.ladeFehlermeldungen(), 500); // Aktualisierung alle 5 Sekunden
   }
 
   ladeSensorDaten() {
@@ -74,6 +76,14 @@ export class SensorComponent implements OnInit {
       console.log(response);
       this.fehlerListe = []; // Frontend-Daten sofort leeren
     });
-  }  
+  }
+  
+  haeufigeFehler: string[] = [];
+  korrelationsWarnung: string = '';
+
+  ladeFehlermeldungen() {
+    this.sensorService.getHaeufigeFehler().subscribe(data => this.haeufigeFehler = data);
+    this.sensorService.getFehlerKorrelation().subscribe(warnung => this.korrelationsWarnung = warnung);
+  }
   
 }

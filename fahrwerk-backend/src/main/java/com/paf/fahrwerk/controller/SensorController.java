@@ -8,7 +8,9 @@ import com.paf.fahrwerk.service.SensorPruefService;
 import com.paf.fahrwerk.service.SensorSimulator;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/sensoren")
@@ -68,5 +70,36 @@ public class SensorController {
         return ResponseEntity.ok("🗑️ Alle Sensor-Fehler wurden gelöscht!");
     }
 
+    @GetMapping("/fehler/haeufige")
+    public List<String> getHaeufigeFehler() {
+        LocalDateTime timeLimit = LocalDateTime.now().minusMinutes(5);
+        List<SensorFehler> alleFehler = sensorFehlerRepository.findAll();
+
+        List<String> fehlerListe = alleFehler.stream()
+            .filter(fehler -> sensorFehlerRepository.countRecentErrors(fehler.getSensorId(), timeLimit) > 3)
+            .map(fehler -> "⚠️ Sensor " + fehler.getPosition() + " hatte " +
+                    sensorFehlerRepository.countRecentErrors(fehler.getSensorId(), timeLimit) + " Fehler in den letzten 5 Minuten.")
+            .distinct()
+            .collect(Collectors.toList());
+
+        // ✅ Falls keine Fehler gefunden wurden, füge eine Standardmeldung hinzu
+        if (fehlerListe.isEmpty()) {
+            fehlerListe.add("✅ Keine häufigen Sensorfehler erkannt.");
+        }
+
+        return fehlerListe;
+    }
+
+    @GetMapping("/fehler/korrelation")
+    public ResponseEntity<String> getFehlerKorrelation() {
+        LocalDateTime timeLimit = LocalDateTime.now().minusMinutes(5);
+        long affectedSensors = sensorFehlerRepository.countDistinctErrorSensors(timeLimit);
+
+        if (affectedSensors > 2) {
+            return ResponseEntity.ok("🚨 KRITISCHE WARNUNG: " + affectedSensors + " Sensoren haben Fehler registriert!");
+        } else {
+            return ResponseEntity.ok("✅ Keine kritischen Sensorwarnungen vorhanden.");
+        }
+    }
 
 }
