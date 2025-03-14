@@ -32,4 +32,3 @@ describe('Sensor-Fehler Löschfunktion Test', () => {
         });
     });
   });
-  

@@ -1,4 +1,4 @@
-describe('Sensor Prüfmodus Test - UI-Überwachung', () => {
+describe('Sensor Prüfmodus Test', () => {
   const pruefModi = [
     { name: 'standardPruefung', response: 'StandardPruefung' },
     { name: 'sportPruefung', response: 'SportPruefung' },
