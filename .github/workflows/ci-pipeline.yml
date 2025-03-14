@@ -1,0 +1,74 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - feature/ci.pipeline
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # --------- BACKEND TESTS ---------
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: Java 17 einrichten
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Backend-Abhängigkeiten installieren
+        run: mvn clean install -DskipTests
+
+      - name: Backend Tests ausführen
+        run: mvn test
+
+  # --------- FRONTEND TESTS MIT CYPRESS ---------
+  frontend-tests:
+    runs-on: ubuntu-latest
+    needs: backend-tests  # Erst Backend-Tests erfolgreich durchlaufen lassen
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Frontend-Abhängigkeiten installieren
+        run: npm install
+
+      - name: Cypress Tests ausführen
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run start
+          wait-on: 'http://localhost:4200'
+          browser: chrome
+
+  # --------- BUILD JOB ---------
+  build:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]  # Erst wenn Tests erfolgreich waren
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: Java 17 einrichten
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Anwendung bauen
+        run: mvn package -DskipTests
