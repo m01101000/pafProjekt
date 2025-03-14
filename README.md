@@ -1,3 +1,8 @@
+build backend
+```sh
+mvn clean package
+```
+
 the entire project runs inside Docker using:
 ---
 ```sh
