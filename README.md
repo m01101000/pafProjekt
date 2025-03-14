@@ -14,7 +14,6 @@ else
 
 
 start backend
----
 ```sh
 cd fahrwerk-backend
 mvn test
@@ -22,7 +21,6 @@ mvn spring-boot:run
 ```
 ---
 start frontend
----
 ```sh
 cd fahrwerk-frontend
 npm install
@@ -30,7 +28,6 @@ ng serve --open
 ```
 ---
 frontend tests
----
 ```sh
 cd fahrwerk-frontend
 npm install cypress --save-dev
