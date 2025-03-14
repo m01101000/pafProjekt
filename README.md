@@ -5,7 +5,10 @@ docker-compose up --build
 ```
 
 
-clone repo
+else
+
+
+start backend
 ---
 ```sh
 cd fahrwerk-backend
@@ -13,7 +16,7 @@ mvn test
 mvn spring-boot:run
 ```
 ---
-in another console
+start frontend
 ---
 ```sh
 cd fahrwerk-frontend
@@ -21,7 +24,7 @@ npm install
 ng serve --open
 ```
 ---
-in another console
+frontend tests
 ---
 ```sh
 cd fahrwerk-frontend
