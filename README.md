@@ -1,4 +1,4 @@
-clone
+clone repo
 ---
 ```sh
 cd fahrwerk-backend
@@ -6,7 +6,7 @@ mvn test
 mvn spring-boot:run
 ```
 ---
-new console
+in another console
 ---
 ```sh
 cd fahrwerk-frontend
@@ -14,7 +14,7 @@ npm install
 ng serve --open
 ```
 ---
-new console
+in another console
 ---
 ```sh
 cd fahrwerk-frontend
