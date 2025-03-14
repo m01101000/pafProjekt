@@ -1,4 +1,4 @@
-Clone repo
+clone
 ---
 ```sh
 cd fahrwerk-backend
