@@ -28,4 +28,3 @@ npx cypress run --spec cypress/e2e/test/sensorDeleteError.cy.js
 npx cypress run --spec cypress/e2e/test/commonError.cy.js
 npx cypress run --spec cypress/e2e/test/criticalWarning.cy.js
 ```
-
