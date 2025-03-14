@@ -1,4 +1,4 @@
-package com.paf.fahrwerk.patterns;
+package com.paf.fahrwerk1.patterns;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.paf.fahrwerk.model.Sensor;
+import com.paf.fahrwerk.patterns.ComfortPruefung;
+import com.paf.fahrwerk.patterns.OffroadPruefung;
+import com.paf.fahrwerk.patterns.Pruefstrategie;
+import com.paf.fahrwerk.patterns.SportPruefung;
+import com.paf.fahrwerk.patterns.StandardPruefung;
 
 class PruefstrategieTest {
 

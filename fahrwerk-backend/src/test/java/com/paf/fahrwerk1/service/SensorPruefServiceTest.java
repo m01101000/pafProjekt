@@ -1,8 +1,10 @@
-package com.paf.fahrwerk.service;
+package com.paf.fahrwerk1.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.paf.fahrwerk.model.Sensor;
+import com.paf.fahrwerk.service.SensorPruefService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

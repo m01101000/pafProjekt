@@ -1,4 +1,4 @@
-package com.paf.fahrwerk.performace;
+package com.paf.fahrwerk1.performace;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

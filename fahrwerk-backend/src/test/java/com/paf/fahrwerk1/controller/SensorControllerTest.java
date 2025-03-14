@@ -1,10 +1,11 @@
-package com.paf.fahrwerk.controller;
+package com.paf.fahrwerk1.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.paf.fahrwerk.controller.SensorController;
 import com.paf.fahrwerk.service.SensorPruefService;
 import com.paf.fahrwerk.service.SensorSimulator;
 import org.junit.jupiter.api.BeforeEach;
