@@ -72,3 +72,4 @@ jobs:
 
       - name: Anwendung bauen
         run: mvn package -DskipTests
+
