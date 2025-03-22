@@ -8,7 +8,7 @@ RUN mvn dependency:go-offline
 
 # Kopiere den Rest des Codes & baue das Projekt
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # 2. Stufe: Das eigentliche Backend-Image mit der fertigen JAR-Datei
 FROM eclipse-temurin:17-jdk

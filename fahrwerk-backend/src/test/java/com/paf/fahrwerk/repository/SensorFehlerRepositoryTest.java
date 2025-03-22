@@ -1,9 +1,8 @@
-package com.paf.fahrwerk1.repository;
+package com.paf.fahrwerk.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.paf.fahrwerk.model.SensorFehler;
-import com.paf.fahrwerk.repository.SensorFehlerRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
