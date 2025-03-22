@@ -1,7 +1,10 @@
 package com.paf.fahrwerk.service;
 
 import com.paf.fahrwerk.model.Sensor;
+import com.paf.fahrwerk.model.SensorFehler;
 import com.paf.fahrwerk.patterns.Pruefstrategie;
+import com.paf.fahrwerk.repository.SensorFehlerRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,24 @@ public class SensorPruefService {
 
     private final ApplicationContext context;
     private Pruefstrategie pruefstrategie;
+
+    @Autowired
+    private SensorFehlerRepository sensorFehlerRepository;
+
+    public void pruefeUndSpeichereFehler(Sensor sensor) {
+        if (!pruefstrategie.pruefeSensorwert(sensor)) {
+            logger.error("❌ Fehler erkannt: Sensor: {} ({} mm)", sensor.getPosition(), sensor.getHoehe());
+            SensorFehler fehler = new SensorFehler();
+            fehler.setSensorId(sensor.getId());
+            fehler.setPosition(sensor.getPosition());
+            fehler.setGemesseneHoehe(sensor.getHoehe());
+            fehler.setMinWert(getMinWert());
+            fehler.setMaxWert(getMaxWert());
+            fehler.setZeitstempel(java.time.LocalDateTime.now());
+
+            sensorFehlerRepository.save(fehler);
+        }
+    }
 
     @Autowired
     public SensorPruefService(ApplicationContext context) {

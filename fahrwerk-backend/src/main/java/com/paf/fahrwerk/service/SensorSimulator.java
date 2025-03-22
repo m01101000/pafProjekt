@@ -48,26 +48,8 @@ public class SensorSimulator {
 
         for (Sensor sensor : sensoren) {
             sensor.setHoehe(getRandomHoehe());
-
-            if (!sensorPruefService.istSensorwertGueltig(sensor)) {
-                logger.error("❌ Fehler erkannt: Sensor: {} ({} mm)", sensor.getPosition(), sensor.getHoehe(), sensor.getMinWert(), sensor.getMaxWert());
-
-                SensorFehler fehler = new SensorFehler();
-                fehler.setSensorId(sensor.getId());
-                fehler.setPosition(sensor.getPosition());
-                fehler.setGemesseneHoehe(sensor.getHoehe());
-                fehler.setMinWert(sensorPruefService.getMinWert());
-                fehler.setMaxWert(sensorPruefService.getMaxWert());
-                fehler.setZeitstempel(LocalDateTime.now());
-
-                sensorFehlerRepository.save(fehler);
-
-                long recentErrors = sensorFehlerRepository.countRecentErrors(sensor.getId(), timeLimit);
-                if (recentErrors > 3) {
-                    logger.warn("⚠️ WARNUNG: Sensor {} hat innerhalb der letzten 5 Minuten {} Fehler!", sensor.getPosition(), recentErrors);
-                }
-            }
-        }
+            sensorPruefService.pruefeUndSpeichereFehler(sensor); // ersetzt die alte Fehlerlogik
+        }        
 
         long affectedSensors = sensorFehlerRepository.countDistinctErrorSensors(timeLimit);
         if (affectedSensors > 2) {
